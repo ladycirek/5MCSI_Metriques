@@ -4,6 +4,8 @@ from flask import json
 from datetime import datetime
 from urllib.request import urlopen
 import sqlite3
+import requests
+
                                                                                                                                        
 app = Flask(__name__)                                                                                                                  
                                                                                                                                        
@@ -38,6 +40,32 @@ def mongraphique1():
 @app.route("/commits/")
 def commits_page():
     return render_template("commits.html")
+
+@app.route('/commits-data/')
+def commits_data():
+    url = 'https://api.github.com/repos/OpenRSI/5MCSI_Metriques/commits'
+    response = requests.get(url)
+    commits_json = response.json()
+
+    # Dictionnaire minute -> nombre de commits
+    minutes_count = {}
+
+    for commit in commits_json:
+        # "2024-02-11T11:57:27Z" dans commit["commit"]["author"]["date"]
+        date_string = commit.get("commit", {}).get("author", {}).get("date")
+        if not date_string:
+            continue
+        date_object = datetime.strptime(date_string, '%Y-%m-%dT%H:%M:%SZ')
+        minute = date_object.minute
+        minutes_count[minute] = minutes_count.get(minute, 0) + 1
+
+    # Transformer en liste exploitable côté JS
+    results = []
+    for minute, count in sorted(minutes_count.items()):
+        results.append({"minute": minute, "count": count})
+
+    return jsonify(results=results)
+
 
 if __name__ == "__main__":
   app.run(debug=True)

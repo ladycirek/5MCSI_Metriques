@@ -10,9 +10,11 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     return render_template('hello.html') #commit
+
 @app.route("/contact/")
 def MaPremiereAPI():
-    return "<h2>Ma page de contact</h2>"
+    return render_template("contact.html")
+
 @app.route('/tawarano/')
 def meteo():
     response = urlopen('https://samples.openweathermap.org/data/2.5/forecast?lat=0&lon=0&appid=xxx')

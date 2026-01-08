@@ -16,27 +16,28 @@
             var date = new Date(entry.Jour * 1000);
             dataTable.addRow([date.toLocaleDateString(), entry.temp]);
             });
-        // Configurer les options du graphique en ligne
-        var options = {
-          title: 'Évolution des températures de la ville de Tawarano',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
+          // Configurer les options du graphique en ligne
+          var options = {
+            title: 'Évolution des températures de la ville de Tawarano',
+            curveType: 'function',
+            legend: { position: 'bottom' }
+          };
 
-        var options = {
+          var options = {
           title: 'Lengths of dinosaurs, in meters',
           legend: { position: 'none' },
-        };
+          };
 
-        var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
+          var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
+          chart.draw(data, options);
+        }
         // Récupération de données depuis notre API /tawarano/
-    fetch('/tawarano/')
-      .then(response => response.json())
-      .then(data => {
-        drawChart(data);
-      })
+        fetch('/tawarano/')
+        .then(response => response.json())
+        .then(data => {
+          drawChart(data);
+          })
+      }
     </script>
   </head>
   <body>

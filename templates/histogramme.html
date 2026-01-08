@@ -6,6 +6,7 @@
     <script type="text/javascript">
       google.charts.load("current", {packages:["corechart"]});
       google.charts.setOnLoadCallback(drawBackgroundColor);
+      
       function drawBackgroundColor() {
         function drawChart(data) {
         // Convertir les données récupérées en un tableau utilisable par Google Charts
@@ -24,12 +25,12 @@
           };
 
           var options = {
-          title: 'Lengths of dinosaurs, in meters',
+          title: 'Évolution des températures de la ville de Tawarano',
           legend: { position: 'none' },
           };
 
           var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
-          chart.draw(data, options);
+          chart.draw(dataTable, options);
         }
         // Récupération de données depuis notre API /tawarano/
         fetch('/tawarano/')
@@ -37,6 +38,7 @@
         .then(data => {
           drawChart(data);
           })
+        
       }
     </script>
   </head>

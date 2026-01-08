@@ -19,10 +19,9 @@
       var date = new Date(entry.Jour * 1000);
       dataTable.addRow([date.toLocaleDateString(), entry.temp]);
     });
-    // Configurer les options du graphique en ligne
+    // Configurer les options du graphique en Histogramme
     var options = {
       title: 'Évolution des températures de la ville de Tawarano',
-      curveType: 'function',
       legend: { position: 'bottom' }
     };
     var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
